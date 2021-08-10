@@ -90,3 +90,26 @@ Type "help" for help.
 
 backstage_plugin_catalog=> exit
 ```
+
+Now I tried to bringup the WebUI:
+```bash
+❯ curl http://demo.example.com
+<html>
+<head><title>503 Service Temporarily Unavailable</title></head>
+```
+I noticed front-end is disabled in the default configruation:
+```yaml
+frontend:
+  enabled: false
+```
+I endabled it and now you can see the WebUI:
+```html
+❯ curl http://demo.example.com
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+....
+```
