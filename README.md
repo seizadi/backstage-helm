@@ -53,3 +53,40 @@ backstage-postgresql-0                  1/1     Running            0          71
 2021-08-07T06:00:38.541Z backstage info Created UrlReader predicateMux{readers=azure{host=dev.azure.com,authed=true},bitbucket{host=bitbucket.org,authed=false},github{host=github.com,authed=true},gitlab{host=gitlab.com,authed=true},fetch{} 
 Backend failed to start up error: password authentication failed for user "backend-user"
 ```
+This is a strange problem, I looked at the helm files and everything looked right!
+I setup port-forward and tested it with psql and I was able to reproduce the
+same problem that backstage server was encourtering:
+```bash
+❯ k port-forward backstage-postgresql-0 5432:5432
+Forwarding from 127.0.0.1:5432 -> 5432
+```
+```bash
+❯ psql --username=backend-user --password --host=localhost -d backstage_plugin_catalog
+Password:
+psql: error: FATAL:  password authentication failed for user "backend-user"
+FATAL:  password authentication failed for user "backend-user"
+```
+You get the password from postgres secret:
+```bash
+❯ k get secret backstage-postgresql -o yaml
+apiVersion: v1
+data:
+  postgresql-password: a0tSYXppRnR6VA==
+kind: Secret
+...
+
+❯ echo a0tSYXppRnR6VA== | base64 --decode
+kKRaziFtzT
+```
+It did not make sense and I was able with the same value file configuration bring up just
+the database and nothing else, so I decided to rerun the same helm chart a
+second time and this time it worked fine!
+```bash
+❯ psql --username=backend-user --password --host=localhost -d backstage_plugin_catalog
+Password:
+psql (13.3, server 11.9)
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+backstage_plugin_catalog=> exit
+```
