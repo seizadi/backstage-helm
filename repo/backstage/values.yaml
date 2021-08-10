@@ -23,8 +23,8 @@ backend:
   demoData: true
   replicaCount: 1
   image:
-    repository: martinaif/backstage-k8s-demo-backend
-    tag: 20210423T1550
+    repository: soheileizadi/backstage-backend
+    tag: seizadi-dev-654e4c0-unsupported
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP
