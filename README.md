@@ -14,6 +14,35 @@ Thing left to do:
    * Set up the software catalog: https://backstage.io/docs/features/software-catalog/configuration
    * Add authentication: https://backstage.io/docs/auth/
 
+## Building front-end and backend
+
+The following steps are common to building both the front-end and the backend parts and MUST be run from the project root:
+```sh
+yarn install
+yarn tsc
+yarn build
+```
+
+### Front-end
+Make sure that the following line is uncommented in the `.dockerignore` file:
+   
+   `!packages/app/dist`
+
+Run the following command to build the backend:
+```sh
+docker build -t backstage-frontend -f Dockerfile.hostbuild .
+```
+
+### Backend
+Make sure that the following line is commented out in the `.dockerignore` file:
+
+   `!packages/app/dist`
+
+Run the following command to build the backend:
+```sh
+yarn build-image
+```
+
 ## Testing Helm Chart
 
    * Download helm chart from backstage repo: https://github.com/backstage/backstage/tree/master/contrib/chart/backstage
