@@ -1,10 +1,15 @@
-{{- $frontendUrl := urlParse .Values.appConfig.app.baseUrl}}
-{{- $backendUrl := urlParse .Values.appConfig.backend.baseUrl}}
-{{- $lighthouseUrl := urlParse .Values.appConfig.lighthouse.baseUrl}}
+{{- $frontBaseURL := tpl .Values.appConfig.app.baseUrl . }}
+{{- $backBaseURL := tpl .Values.appConfig.backend.baseUrl . }}
+{{- $lighthouseBaseURL := tpl .Values.appConfig.lighthouse.baseUrl . }}
+{{- $frontendUrl := urlParse  $frontBaseURL}}
+{{- $backendUrl := urlParse $backBaseURL}}
+{{- $lighthouseUrl := urlParse $lighthouseBaseURL}}
+{{- $secure := .Values.host.csp.secure -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ include "backstage.fullname" . }}-ingress
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- if .Values.issuer.email }}
     cert-manager.io/cluster-issuer: {{ .Values.issuer.clusterIssuer }}
@@ -20,12 +25,10 @@ spec:
   tls:
     - secretName: {{ include "backstage.fullname" . }}-tls
       hosts:
-        - {{ $frontendUrl.host }}
-        - {{ $backendUrl.host }}
-        - {{ $lighthouseUrl.host }}
+        - {{ $frontendUrl.host | quote }}
 
   rules:
-    - host: {{ $frontendUrl.host }}
+    - host: {{ $frontendUrl.host | quote }}
       http:
         paths:
           - path: /
@@ -40,7 +43,7 @@ spec:
               servicePort: 80
           {{/* Route the backend through a different host */}}
           {{- else -}}
-    - host: {{ $backendUrl.host }}
+    - host: {{ $backendUrl.host | quote }}
       http:
         paths:
           - path: {{ $backendUrl.path | default "/" }}
@@ -51,7 +54,7 @@ spec:
 
 {{/* Route lighthouse through a different host */}}
 {{- if not ( eq $frontendUrl.host $lighthouseUrl.host ) }}
-    - host: {{ $lighthouseUrl.host }}
+    - host: {{ $lighthouseUrl.host | quote }}
       http:
         paths:
           - path: {{ $lighthouseUrl.path | default "/" }}
@@ -65,6 +68,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ include "backstage.fullname" . }}-ingress-lighthouse
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- if .Values.issuer.email }}
     cert-manager.io/cluster-issuer: {{ .Values.issuer.clusterIssuer }}
@@ -80,9 +84,9 @@ spec:
   tls:
     - secretName: {{ include "backstage.fullname" . }}-tls
       hosts:
-        - {{ $lighthouseUrl.host }}
+        - {{ $lighthouseUrl.host | quote }}
   rules:
-    - host: {{ $frontendUrl.host }}
+    - host: {{ $frontendUrl.host | quote }}
       http:
         paths:
           - path: {{$lighthouseUrl.path}}(/|$)(.*)
