@@ -23,8 +23,8 @@ backend:
   demoData: true
   replicaCount: 1
   image:
-    repository: backstage
-    tag: '1.0'
+    repository: soheileizadi/backstage-backend
+    tag: seizadi-dev-654e4c0-unsupported
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP

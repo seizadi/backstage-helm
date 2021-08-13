@@ -10,9 +10,18 @@ yarn dev
 ```
 
 Thing left to do:
-   * Test helm chart
+   * Dockerfile
    * Set up the software catalog: https://backstage.io/docs/features/software-catalog/configuration
    * Add authentication: https://backstage.io/docs/auth/
+
+## Dockerfiles
+There are backend and frontend images but no Dockerfile for the images that are
+referenced by the helm charts. There are directions in the 
+[backstage for docker](https://backstage.io/docs/deployment/docker).
+There is a [Dockerfile](packages/backend/Dockerfile) for backend. There are
+directions for building 
+[Dockerfile for frontend](https://backstage.io/docs/deployment/docker#separate-frontend).
+We will use the [reference project]()
 
 ## Building front-end and backend
 
