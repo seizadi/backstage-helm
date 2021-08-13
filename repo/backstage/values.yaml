@@ -6,8 +6,8 @@ frontend:
   enabled: true
   replicaCount: 1
   image:
-    repository: martinaif/backstage-k8s-demo-frontend
-    tag: test1
+    repository: backstage-frontend
+    tag: '1.0'
     pullPolicy: IfNotPresent
   containerPort: 80
   serviceType: ClusterIP
@@ -23,8 +23,8 @@ backend:
   demoData: true
   replicaCount: 1
   image:
-    repository: martinaif/backstage-k8s-demo-backend
-    tag: 20210423T1550
+    repository: backstage
+    tag: '1.0'
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP
@@ -62,14 +62,6 @@ lighthouse:
 nameOverride: ''
 fullnameOverride: ''
 
-ingress:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-
-issuer:
-  email:
-  clusterIssuer: 'letsencrypt-staging'
-
 global:
   postgresql:
     postgresqlUsername: backend-user
@@ -87,18 +79,36 @@ postgresql:
   volumePermissions:
     enabled: true
   initdbScriptsSecret: backstage-postgresql-initdb
+  persistence:
+    size: 8Gi
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-request-redirect: $scheme://$host$request_uri
+    nginx.ingress.kubernetes.io/auth-signin: https://oauth.csp.infoblox.com/oauth2/start?rd=https%3A%2F%2F$host$request_uri
+    nginx.ingress.kubernetes.io/auth-url: https://oauth.csp.infoblox.com/oauth2/auth
+
+issuer:
+  email:
+  clusterIssuer: 'letsencrypt-staging'
+
+host:
+  csp:
+    cluster: env-4
+    domain: '.test.infoblox.com'
 
 appConfig:
   app:
-    baseUrl: https://demo.example.com
+    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
     title: Backstage
     googleAnalyticsTrackingId:
   backend:
-    baseUrl: https://demo.example.com
+    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
     listen:
       port: 7000
     cors:
-      origin: https://demo.example.com
+      origin: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
     database:
       client: pg
       connection:
@@ -113,10 +123,10 @@ appConfig:
   sentry:
     organization: example-org-name
   techdocs:
-    storageUrl: https://demo.example.com/api/techdocs/static/docs
-    requestUrl: https://demo.example.com/api/techdocs
+    storageUrl: https://backstage-env-4.test.infoblox.com/api/techdocs/static/docs
+    requestUrl: https://backstage-env-4.test.infoblox.com/api/techdocs
   lighthouse:
-    baseUrl: https://demo.example.com/lighthouse-api
+    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/lighthouse-api
   rollbar:
     organization: example-org-name
 
