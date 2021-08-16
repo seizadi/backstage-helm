@@ -22,6 +22,40 @@ There is a [Dockerfile](packages/backend/Dockerfile) for backend. There are
 directions for building 
 [Dockerfile for frontend](https://backstage.io/docs/deployment/docker#separate-frontend).
 We will use the [reference project]()
+
+## Building front-end and backend
+
+The following steps are common to building both the front-end and the backend parts and MUST be run from the project root:
+```sh
+yarn install
+yarn tsc
+yarn build
+```
+
+### Front-end
+Make sure that the following line is uncommented in the `.dockerignore` file:
+   
+   `!packages/app/dist`
+
+Run the following commands to build the frontend:
+```sh
+cp ./front.dockerignore ./.dockerignore
+docker build -t backstage-frontend -f Dockerfile.hostbuild .
+docker image tag docker.io/library/backstage-frontend:latest soheileizadi/backstage-frontend:1.0
+```
+
+### Backend
+Make sure that the following line is commented out in the `.dockerignore` file:
+
+   `!packages/app/dist`
+
+Run the following command to build the backend:
+```sh
+cp ./back.dockerignore ./.dockerignore
+yarn build-image
+docker image tag docker.io/library/backstage:latest soheileizadi/backstage:1.0
+```
+
 ## Testing Helm Chart
 
    * Download helm chart from backstage repo: https://github.com/backstage/backstage/tree/master/contrib/chart/backstage
