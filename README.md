@@ -37,9 +37,11 @@ Make sure that the following line is uncommented in the `.dockerignore` file:
    
    `!packages/app/dist`
 
-Run the following command to build the backend:
+Run the following commands to build the frontend:
 ```sh
+cp ./front.dockerignore ./.dockerignore
 docker build -t backstage-frontend -f Dockerfile.hostbuild .
+docker image tag docker.io/library/backstage-frontend:latest soheileizadi/backstage-frontend:1.0
 ```
 
 ### Backend
@@ -49,7 +51,9 @@ Make sure that the following line is commented out in the `.dockerignore` file:
 
 Run the following command to build the backend:
 ```sh
+cp ./back.dockerignore ./.dockerignore
 yarn build-image
+docker image tag docker.io/library/backstage:latest soheileizadi/backstage:1.0
 ```
 
 ## Testing Helm Chart
