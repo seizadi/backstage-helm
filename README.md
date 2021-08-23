@@ -56,6 +56,23 @@ yarn build-image
 docker image tag docker.io/library/backstage:latest soheileizadi/backstage:1.0
 ```
 
+## Local Development
+The following instructions are for local development, since this project is setup for postgres backend it will not
+come up as easily as the default environment with built-in sqlite database.
+
+You need to create a local database
+```bash
+helm repo add postgres-helm https://seizadi.github.io/postgres-helm/
+kubectl create namespace postgres
+helm install -n postgres postgres postgres-helm/postgres
+kubectl port-forward postgres-postgresql-0 5432:5432
+```
+
+Now to run the backend you would:
+```bash
+POSTGRES_HOST=localhost POSTGRES_PORT=5432 POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres npm start
+```
+
 ## Testing Helm Chart
 
    * Download helm chart from backstage repo: https://github.com/backstage/backstage/tree/master/contrib/chart/backstage
