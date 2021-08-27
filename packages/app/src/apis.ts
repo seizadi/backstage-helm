@@ -2,8 +2,8 @@ import {
   ScmIntegrationsApi, scmIntegrationsApiRef
 } from '@backstage/integration-react';
 import { AnyApiFactory, configApiRef, createApiFactory } from '@backstage/core-plugin-api';
-import { ExampleCostInsightsClient, costInsightsApiRef } from '@backstage/plugin-cost-insights';
-// export class CostInsightsClient implements CostInsightsApi { ... }
+import { costInsightsApiRef } from '@backstage/plugin-cost-insights';
+import { CostInsightsClient } from 'plugin-cost-insights-backend';
 
 export const apis: AnyApiFactory[] = [
   createApiFactory({
@@ -11,12 +11,6 @@ export const apis: AnyApiFactory[] = [
     deps: { configApi: configApiRef },
     factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
   }),
-  createApiFactory(costInsightsApiRef, new ExampleCostInsightsClient()),
-
-  // createApiFactory({
-  //   api: costInsightsApiRef,
-  //   deps: {},
-  //   factory: () => new CostInsightsClient(),
-  // }),
+  createApiFactory(costInsightsApiRef, new CostInsightsClient()),
 ];
 
