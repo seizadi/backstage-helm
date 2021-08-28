@@ -43,7 +43,7 @@ integrations:
     #   token: ${GHE_TOKEN}
 
 proxy:
-  '/cost-insight-backend':
+  '/cost-insights-plugin':
     target: http://localhost:8080
     headers:
       Content-Type: 'application/json'
