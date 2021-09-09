@@ -174,8 +174,8 @@ costInsights:
       name: SNS
       icon: data
   metrics:
-    DAU:
-      name: Daily Active Users
+    DAR:
+      name: Daily Average Requests
       default: true
-    MSC:
-      name: Monthly Subscribers
+    DAC:
+      name: Daily Active Clients
