@@ -143,9 +143,12 @@ costInsights:
     S3:
       name: S3
       icon: storage
+    RDS:
+      name: RDS
+      icon: data
     DynamoDB:
       name: DynamoDB
-      icon: search
+      icon: data
     ElasticSearch:
       name: ElasticSearch
       icon: search
@@ -157,7 +160,7 @@ costInsights:
       icon: data
     ELB:
       name: ELB
-      icon: search
+      icon: compute
     EMR:
       name: EMR
       icon: data
