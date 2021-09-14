@@ -145,10 +145,10 @@ costInsights:
       icon: storage
     RDS:
       name: RDS
-      icon: data
+      icon: database
     DynamoDB:
       name: DynamoDB
-      icon: data
+      icon: database
     ElasticSearch:
       name: ElasticSearch
       icon: search
@@ -163,7 +163,7 @@ costInsights:
       icon: compute
     EMR:
       name: EMR
-      icon: data
+      icon: ml
     MSK:
       name: Managed Kafka
       icon: data
@@ -182,3 +182,5 @@ costInsights:
       default: true
     DAC:
       name: Daily Active Clients
+    BudgetTotal:
+      name: Target Cost Total Budget
