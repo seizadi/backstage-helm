@@ -49,6 +49,24 @@ To get started quickly, this template already includes some statically configure
 in `app-config.yaml` under `catalog.locations`. You can remove and replace these locations as you
 like, and also override them for local development in `app-config.local.yaml`.
 
+## Kubernetes Plugin
+Follow guide for [Kubernetes Plugin installation](https://backstage.io/docs/features/kubernetes/installation).
+
+[Deploy Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+```
+
+Use the Dashboard ServiceAccount for Kubernetes Plugin as a starting point:
+```bash
+kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa kubernetes-dashboard -o=json \
+| jq -r '.secrets[0].name') -o=json \
+| jq -r '.data["token"]' \
+| base64 --decode
+```
+Setup Kubernetes config:
+```yaml
+```
 ## Authentication
 
 We chose [Passport](http://www.passportjs.org/) as authentication platform due
