@@ -184,3 +184,16 @@ costInsights:
       name: Daily Active Clients
     BudgetTotal:
       name: Target Cost Total Budget
+kubernetes:
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: http://127.0.0.1:63867
+          name: kind-kind
+          authProvider: 'serviceAccount'
+          skipTLSVerify: true
+          serviceAccountToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IjVyVzEyOGhMVXMxQmJ0V19Fb1dJNXZiT0RzZ3dMRDg3VE53aTJfN0VRYVUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi14anBzdyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijg3NGFkYjNjLTY0MDctNDAzMS1hYmUxLTg5YmRlYzIzNGI2MSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.gjPg1j1SS0fK8zolKO1jjIvxgSpyb5Cy9ikN5LoUy_mk98-Zzw06RRIg3SH2w4MEtM1cM_maWfF3hwbVWm269LvGX5AxXvu7remKGhN6yWq4i7kUoJS12CsqX2C4mRwwX68fWlMjU5z_HEtHUwc4f5BtOGGYYSnvJ9eVFBw_Z1Dt9QNY7_86FhjgFz-yBWBcg1LN2nW9QKhaodZP6kWZG6Eco0EhzOYUR_9dfVzGUsWRiaSwKWmDw6FAJ3bYesKdnGAJT94QozW1j-zOc_p1JdFk-Bbabz1oZ8VXdyThCglLedprnhv-eOnvGyziD6yQnq-886v7IpkZrU64DQIK4Q
+#          dashboardUrl: http://127.0.0.1:4713 # for kind kubectl -n kubernetes-dashboard port-forward deploy/kubernetes-dashboard 4713:443
+#          dashboardApp: standard

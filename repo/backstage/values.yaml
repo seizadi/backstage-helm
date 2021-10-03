@@ -7,7 +7,7 @@ frontend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-frontend
-    tag: seizadi-dev-654e4c0-unsupported
+    tag: seizadi-dev-034bbf8
     pullPolicy: IfNotPresent
   containerPort: 80
   serviceType: ClusterIP
@@ -24,7 +24,7 @@ backend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-backend
-    tag: seizadi-dev-654e4c0-unsupported
+    tag: seizadi-dev-034bbf8
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP
@@ -116,8 +116,8 @@ appConfig:
   sentry:
     organization: example-org-name
   techdocs:
-    storageUrl: https://localhost/api/techdocs/static/docs
-    requestUrl: https://localhost/api/techdocs
+    storageUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs/static/docs
+    requestUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs
   lighthouse:
     baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/lighthouse-api
   rollbar:
