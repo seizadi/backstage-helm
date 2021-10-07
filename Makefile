@@ -31,8 +31,8 @@ frontend:
 	yarn tsc
 	yarn build
 	@docker build -t backstage-frontend -f Dockerfile.hostbuild .
-	@docker tag docker.io/library/backstage-frontend:latest $(FRONTEND_IMAGE):$(IMAGE_VERSION)
-	@docker tag $(FRONTEND_IMAGE):$(IMAGE_VERSION) $(FRONTEND_IMAGE):latest
+	docker tag docker.io/library/backstage-frontend:latest $(FRONTEND_IMAGE):$(IMAGE_VERSION)
+	docker tag $(FRONTEND_IMAGE):$(IMAGE_VERSION) $(FRONTEND_IMAGE):latest
 
 .PHONY: backend
 backend:
@@ -41,8 +41,8 @@ backend:
 	yarn tsc
 	yarn build
 	yarn build-image
-	@docker tag docker.io/library/backstage:latest $(SERVER_IMAGE):$(IMAGE_VERSION)
-	@docker tag $(SERVER_IMAGE):$(IMAGE_VERSION) $(SERVER_IMAGE):latest
+	docker tag docker.io/library/backstage:latest $(SERVER_IMAGE):$(IMAGE_VERSION)
+	docker tag $(SERVER_IMAGE):$(IMAGE_VERSION) $(SERVER_IMAGE):latest
 
 packages/backend/dist/bundle.tar.gz:
 	yarn build

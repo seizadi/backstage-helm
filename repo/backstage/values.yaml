@@ -7,7 +7,7 @@ frontend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-frontend
-    tag: seizadi-dev-034bbf8
+    tag: seizadi-dev-6e0a10a-unsupported
     pullPolicy: IfNotPresent
   containerPort: 80
   serviceType: ClusterIP
@@ -24,7 +24,7 @@ backend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-backend
-    tag: seizadi-dev-034bbf8
+    tag: seizadi-dev-6e0a10a-unsupported
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP
@@ -93,15 +93,21 @@ host:
 
 appConfig:
   app:
-    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+    # TODO - helm can not resolve circular resolution
+    # baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+    baseUrl: https://backstage-localhost
     title: Backstage
     googleAnalyticsTrackingId:
   backend:
-    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+    # TODO - helm can not resolve circular resolution
+    # baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+    baseUrl: https://backstage-localhost
     listen:
       port: 7000
     cors:
-      origin: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+      # TODO - helm can not resolve circular resolution
+      # origin: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}
+      origin: https://backstage-localhost
     database:
       client: pg
       connection:
@@ -116,10 +122,14 @@ appConfig:
   sentry:
     organization: example-org-name
   techdocs:
-    storageUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs/static/docs
-    requestUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs
+    # TODO - helm can not resolve circular resolution
+    # storageUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs/static/docs
+    storageUrl: https://backstage-localhost/api/techdocs/static/docs
+    # requestUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/api/techdocs
+    requestUrl: https://backstage-localhost/api/techdocs
   lighthouse:
-    baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/lighthouse-api
+    # baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/lighthouse-api
+    baseUrl: https://backstage-localhost/lighthouse-api
   rollbar:
     organization: example-org-name
 

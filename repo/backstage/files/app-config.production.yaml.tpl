@@ -1,7 +1,16 @@
 backend:
   lighthouseHostname: {{ include "lighthouse.serviceName" . | quote }}
+  baseUrl: {{ .Values.appConfig.backend.baseUrl | quote}}
   listen:
-      port: {{ .Values.appConfig.backend.listen.port | default 7000 }}
+    port: {{ .Values.appConfig.backend.listen.port | default 7000 }}
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: {{ .Values.appConfig.backend.baseUrl | quote}}
+    methods: [GET, POST, PUT, DELETE]
+    credentials: true
   database:
     client: {{ .Values.appConfig.backend.database.client | quote }}
     connection:

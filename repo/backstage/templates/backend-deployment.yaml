@@ -33,7 +33,7 @@ spec:
             - "--config"
             - "app-config.yaml"
             - "--config"
-            - {{ printf "/usr/src/app/%s" (include "backstage.appConfigFilename" .) | quote }}
+            - {{ printf "/app/%s" (include "backstage.appConfigFilename" .) | quote }}
           image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
           imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           ports:
@@ -62,7 +62,7 @@ spec:
               mountPath: {{ include "backstage.backend.postgresCaDir" . }}
             {{- end }}
             - name: app-config
-              mountPath: {{ printf "/usr/src/app/%s" (include "backstage.appConfigFilename" .) }}
+              mountPath: {{ printf "/app/%s" (include "backstage.appConfigFilename" .) }}
               subPath: {{ include "backstage.appConfigFilename" . }}
 
       volumes:
