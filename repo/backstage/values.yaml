@@ -7,8 +7,8 @@ frontend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-frontend
-    tag: seizadi-dev-6e0a10a-unsupported
-    pullPolicy: IfNotPresent
+    tag: seizadi-dev-1d65a9a-unsupported
+    pullPolicy: Always
   containerPort: 80
   serviceType: ClusterIP
   resources:
@@ -129,7 +129,7 @@ appConfig:
     requestUrl: https://backstage-localhost/api/techdocs
   lighthouse:
     # baseUrl: https://backstage-{{ .Values.host.csp.cluster }}{{ .Values.host.csp.domain }}/lighthouse-api
-    baseUrl: https://backstage-localhost/lighthouse-api
+    baseUrl: https://backstage-localhosthost/lighthouse-api
   rollbar:
     organization: example-org-name
 
@@ -192,8 +192,8 @@ auth:
     clientId: a
     clientSecret: a
   github:
-    clientId: c
-    clientSecret: c
+    clientId: a
+    clientSecret: a
   gitlab:
     clientId: b
     clientSecret: b

@@ -22,9 +22,23 @@ import { Root } from './components/Root';
 import { AlertDisplay, OAuthRequestDialog } from '@backstage/core-components';
 import { createApp, FlatRoutes } from '@backstage/core-app-api';
 import { CostInsightsPage } from '@backstage/plugin-cost-insights';
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { SignInProviderConfig, SignInPage } from '@backstage/core-components';
+
+const githubProvider: SignInProviderConfig = {
+    id: 'github-auth-provider',
+    title: 'GitHub',
+    message: 'Sign in using GitHub',
+    apiRef: githubAuthApiRef,
+};
 
 const app = createApp({
   apis,
+  components: {
+      // Add guest if you want to allow guest access
+      SignInPage: props => ( <SignInPage {...props} providers={['guest', githubProvider]} /> ),
+      // SignInPage: props => ( <SignInPage {...props} providers={githubProvider} /> ),
+    },
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,

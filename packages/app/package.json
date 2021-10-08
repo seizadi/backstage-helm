@@ -28,6 +28,7 @@
     "@internal/plugin-cost-insights-backend": "^0.1.0",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",
+    "@roadiehq/backstage-plugin-github-pull-requests": "^1.0.16",
     "history": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
