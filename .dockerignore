@@ -3,6 +3,3 @@ node_modules
 packages
 !packages/backend/dist
 plugins
-
-# ONLY required for frontend image build
-!packages/app/dist

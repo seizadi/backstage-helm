@@ -7,8 +7,8 @@ frontend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-frontend
-    tag: seizadi-dev-1d65a9a-unsupported
-    pullPolicy: Always
+    tag: seizadi-dev-1a54437-unsupported
+    pullPolicy: IfNotPresent
   containerPort: 80
   serviceType: ClusterIP
   resources:
@@ -24,7 +24,7 @@ backend:
   replicaCount: 1
   image:
     repository: soheileizadi/backstage-backend
-    tag: seizadi-dev-6e0a10a-unsupported
+    tag: seizadi-dev-1a54437-unsupported
     pullPolicy: IfNotPresent
   containerPort: 7000
   serviceType: ClusterIP
@@ -223,7 +223,7 @@ auth:
   # This is a 'Personal Access Token'
   circleciAuthToken: r
   # Used by the scaffolder to create GitHub repos. Must have 'repo' scope.
-  githubToken: g
+  githubToken: a
   gitlabToken: g
   newRelicRestApiKey: r
   travisciAuthToken: fake-travis-ci-auth-token
