@@ -10,6 +10,14 @@ backend:
   listen:
     port: 7000
   csp:
+    # FIXME - Check if we need this for JIRA Plugin
+    # https://github.com/RoadieHQ/roadie-backstage-plugins/tree/main/plugins/backstage-plugin-jira#how-to-add-jira-project-dependency-to-backstage-app
+#    img-src:
+#      # "'self'" and 'data' are from the backstage default but must be set since img-src is overriden
+#      - "'self'"
+#      - 'data:'
+#      # Allow your Jira instance for @roadiehq/backstage-plugin-jira
+#      - 'JIRA_URL'
     connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
@@ -49,9 +57,16 @@ proxy:
       Content-Type: 'application/json'
       Authorization:
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY2NvdW50SUQiOjF9.GsXyFDDARjXe1t9DPo2LIBKHEal3O7t3vLI3edA7dGU'
-  '/test':
-    target: 'https://example.com'
-    changeOrigin: true
+  '/jira/api':
+    target: <JIRA_URL>
+    headers:
+      Authorization:
+        $env: JIRA_TOKEN
+      Accept: 'application/json'
+      Content-Type: 'application/json'
+      X-Atlassian-Token: 'no-check'
+      # This is a workaround since Jira APIs reject browser origin requests. Any dummy string without whitespace works.
+      User-Agent: "AnyRandomString"
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs

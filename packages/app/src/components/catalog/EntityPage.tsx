@@ -56,6 +56,7 @@ import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
 import { EmptyState } from '@backstage/core-components';
 import { EntityKubernetesContent } from '@backstage/plugin-kubernetes';
 import { EntityGithubPullRequestsContent } from '@roadiehq/backstage-plugin-github-pull-requests';
+import { EntityJiraOverviewCard, isJiraAvailable } from '@roadiehq/backstage-plugin-jira';
 
 const cicdContent = (
   // This is an example of how you can implement your company's logic in entity page.
@@ -99,6 +100,14 @@ const overviewContent = (
         <Grid item xs={12}>
           <EntityProcessingErrorsPanel />
         </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+
+    <EntitySwitch>
+      <EntitySwitch.Case if={isJiraAvailable}>
+          <Grid item md={6}>
+              <EntityJiraOverviewCard />
+          </Grid>
       </EntitySwitch.Case>
     </EntitySwitch>
 
