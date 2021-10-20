@@ -26,6 +26,5 @@ COPY packages/app/dist /usr/share/nginx/html
 COPY docker/default.conf.template /etc/nginx/templates/default.conf.template
 
 COPY docker/inject-config.sh /docker-entrypoint.d/40-inject-config.sh
-RUN chmod +x /docker-entrypoint.d/40-inject-config.sh
 
 ENV PORT 80
